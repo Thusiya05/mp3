@@ -10,6 +10,9 @@ root.geometry("500x400")
 # Initialize pygame
 pygame.mixer.init()
 
+
+
+
 # Create Function To Add One Song To Playlist
 def add_song():
 	song = filedialog.askopenfilename(initialdir='audio/', title="Choose A Song", filetypes=(("mp3 Files", "*.mp3"), ))
@@ -175,6 +178,11 @@ remove_song_menu =Menu(my_menu, tearoff=0)
 my_menu.add_cascade(label="Remove songs", menu=remove_song_menu)
 remove_song_menu.add_command(label="Delete A Song From Playlist", command=delete_song)
 remove_song_menu.add_command(label="Delete All Song From Playlist", command=delete_all_songs)
+
+# Create status bar
+status_bar = Label(root, text='nothing', bd=1, relief=GROOVE, anchor=E)
+status_bar.pack(fill=X, side=BOTTOM, ipady=2)
+
 # Temporary Label
 my_label = Label(root, text='')
 my_label.pack(pady=20)

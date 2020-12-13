@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 import pygame
+import time
 
 root = Tk()
 
@@ -10,8 +11,16 @@ root.geometry("500x400")
 # Initialize pygame
 pygame.mixer.init()
 
-
-
+# Create a function to deal with time
+def play_time():
+	# Grab current song time
+	current_time = pygame.mixer.music.get_pos() / 1000
+	# Convert song time to time format
+	converted_current_time = time.strftime('%M:%S', time.gmtime(current_time))
+	# Add current time to status bar
+	status_bar.config(text=f'Time Elapsed: {converted_current_time}')
+	# Create loop to check the time every second
+	status_bar.after(1000, play_time)
 
 # Create Function To Add One Song To Playlist
 def add_song():
@@ -55,6 +64,9 @@ def play():
 	pygame.mixer.music.load(song)
 	# Play song with pygame mixer
 	pygame.mixer.music.play(loops=0)
+
+	# Get song time
+	play_time()
 
 # Create stop function
 def stop():
@@ -180,7 +192,7 @@ remove_song_menu.add_command(label="Delete A Song From Playlist", command=delete
 remove_song_menu.add_command(label="Delete All Song From Playlist", command=delete_all_songs)
 
 # Create status bar
-status_bar = Label(root, text='nothing', bd=1, relief=GROOVE, anchor=E)
+status_bar = Label(root, text='', bd=1, relief=GROOVE, anchor=E)
 status_bar.pack(fill=X, side=BOTTOM, ipady=2)
 
 # Temporary Label
